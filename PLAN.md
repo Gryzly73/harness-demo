@@ -2,7 +2,7 @@
 
 Build `minisearch` greenfield per SPEC.md. Features in delivery order; each task is one iteration.
 
-- [ ] T1 Core library, CLI search, English recall
+- [x] T1 Core library, CLI search, English recall
   - done when: `pytest -q tests/acceptance/test_core.py && python -m minisearch.evaluate --set en --min-recall 0.8`
 - [ ] T2 Index persistence and CLI index/search roundtrip
   - done when: `pytest -q tests/acceptance/test_persistence.py`
