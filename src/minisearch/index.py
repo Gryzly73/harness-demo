@@ -23,10 +23,14 @@ class Index:
         for doc in docs:
             self.add(doc)
 
-    def search(self, query: str, k: int = 5) -> list[tuple[Document, float]]:
+    def search(
+        self, query: str, k: int = 5, lang: str | None = None
+    ) -> list[tuple[Document, float]]:
         q = self._embedder.embed(query)
         scored: list[tuple[Document, float]] = []
         for doc, vec in zip(self._docs, self._vectors, strict=True):
+            if lang is not None and doc.lang != lang:
+                continue
             score = sum(a * b for a, b in zip(q, vec, strict=True))
             if score > 0:
                 scored.append((doc, score))

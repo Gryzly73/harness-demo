@@ -24,7 +24,7 @@ def cmd_search(args: argparse.Namespace) -> int:
     else:
         index = Index(HashingEmbedder())
         index.add_many(load_jsonl(args.corpus))
-    for doc, score in index.search(args.query, k=args.k):
+    for doc, score in index.search(args.query, k=args.k, lang=args.lang):
         print(_format_hit(doc.id, score, doc.text))
     return 0
 
@@ -45,6 +45,7 @@ def main(argv: list[str] | None = None) -> int:
     search_p.add_argument("--corpus", "-c", default=str(DEFAULT_CORPUS))
     search_p.add_argument("--index", default=None)
     search_p.add_argument("-k", type=int, default=5)
+    search_p.add_argument("--lang", default=None)
 
     index_p = sub.add_parser("index", help="build and save an index")
     index_p.add_argument("--corpus", "-c", default=str(DEFAULT_CORPUS))
