@@ -19,10 +19,20 @@ def _format_hit(doc_id: str, score: float, text: str) -> str:
 
 
 def cmd_search(args: argparse.Namespace) -> int:
-    index = Index(HashingEmbedder())
-    index.add_many(load_jsonl(args.corpus))
+    if args.index:
+        index = Index.load(args.index, HashingEmbedder())
+    else:
+        index = Index(HashingEmbedder())
+        index.add_many(load_jsonl(args.corpus))
     for doc, score in index.search(args.query, k=args.k):
         print(_format_hit(doc.id, score, doc.text))
+    return 0
+
+
+def cmd_index(args: argparse.Namespace) -> int:
+    index = Index(HashingEmbedder())
+    index.add_many(load_jsonl(args.corpus))
+    index.save(args.out)
     return 0
 
 
@@ -33,11 +43,18 @@ def main(argv: list[str] | None = None) -> int:
     search_p = sub.add_parser("search", help="search a corpus")
     search_p.add_argument("query")
     search_p.add_argument("--corpus", "-c", default=str(DEFAULT_CORPUS))
+    search_p.add_argument("--index", default=None)
     search_p.add_argument("-k", type=int, default=5)
+
+    index_p = sub.add_parser("index", help="build and save an index")
+    index_p.add_argument("--corpus", "-c", default=str(DEFAULT_CORPUS))
+    index_p.add_argument("--out", required=True)
 
     args = parser.parse_args(argv)
     if args.command == "search":
         return cmd_search(args)
+    if args.command == "index":
+        return cmd_index(args)
     return 1
 
 

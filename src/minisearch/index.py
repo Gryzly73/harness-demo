@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 from .corpus import Document
 from .embed import HashingEmbedder
 
@@ -29,3 +32,21 @@ class Index:
                 scored.append((doc, score))
         scored.sort(key=lambda item: (-item[1], item[0].id))
         return scored[:k]
+
+    def save(self, path: str | Path) -> None:
+        payload = {
+            "docs": [
+                {"id": d.id, "text": d.text, "lang": d.lang} for d in self._docs
+            ]
+        }
+        Path(path).write_text(json.dumps(payload), encoding="utf-8")
+
+    @classmethod
+    def load(cls, path: str | Path, embedder: HashingEmbedder) -> Index:
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+        index = cls(embedder)
+        for row in payload["docs"]:
+            index.add(
+                Document(id=row["id"], text=row["text"], lang=row.get("lang", "en"))
+            )
+        return index
