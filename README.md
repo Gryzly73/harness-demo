@@ -3,6 +3,11 @@
 A tiny search library (hashing embedder + cosine, English and Russian, stdlib only) used as a target
 for an **agentic harness**: goal -> plan -> loop, with objective checks outside the agent.
 
+Документация:
+- [поисковик для заказчика](ДЛЯ_ЗАКАЗЧИКА.md);
+- [Harness для заказчика](HARNESS_ДЛЯ_ЗАКАЗЧИКА.md);
+- [исходный проект и выполненные доработки](ИСХОДНЫЙ_ПРОЕКТ_И_ДОРАБОТКИ.md).
+
 | Mode | Start state | Who writes the plan | Shows |
 |---|---|---|---|
 | `brownfield` | working code, 3 missing features | human (`PLAN.md` ships) | loop, dynamic replanning, protections |
