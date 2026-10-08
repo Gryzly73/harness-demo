@@ -19,14 +19,28 @@ demo/                               fake_agent.py (offline rehearsal), reference
 ```
 
 ## Quick start
-```bash
-python -m venv .venv && source .venv/bin/activate && pip install pytest ruff
-./use_mode.sh greenfield            # or brownfield
-git init -b main && git add -A && git commit -m baseline
-AGENT_CMD='python3 demo/fake_agent.py' AUTO_APPROVE=1 ./loop.sh   # rehearsal, no API, ~5 s
-./loop.sh                                                         # real: cursor-agent
+
+Windows PowerShell:
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -e ".[dev]"
+.\use_mode.ps1 greenfield           # or brownfield
+git add -A; git commit -m "greenfield baseline"
+$env:AUTO_APPROVE = "1"
+.\loop.ps1                           # real: Cursor Agent CLI
 ```
-Real run: use a **separate copy** with `./use_mode.sh <mode> --strip` (removes `modes/`, `demo/`, `DEMO.md`)
+
+Linux/macOS:
+```bash
+python -m venv .venv && source .venv/bin/activate && pip install -e ".[dev]"
+./use_mode.sh greenfield            # or brownfield
+git add -A && git commit -m "greenfield baseline"
+AUTO_APPROVE=1 ./loop.sh
+```
+
+Real run: use a **separate copy** with `use_mode.ps1 <mode> --strip` or
+`./use_mode.sh <mode> --strip` (removes `modes/`, `demo/`, `DEMO.md`)
 so the agent cannot read the reference solution. `.cursorignore` also hides them (best effort).
 
 Env: `MAX_ITER=12 MAX_FAILS=3 ITER_TIMEOUT=600 PLAN_TRIES=3 AUTO_APPROVE=0 AGENT_CMD=...`

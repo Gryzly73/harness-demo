@@ -14,9 +14,11 @@ import sys
 from pathlib import Path
 
 try:  # works both as `python harness/validate_plan.py` and as an imported module
+    from harness.loop import parse_check
     from harness.plan import PLAN, Task, parse
 except ImportError:  # pragma: no cover
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from harness.loop import parse_check
     from harness.plan import PLAN, Task, parse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,9 +56,18 @@ def red_errors(tasks: list[Task]) -> list[str]:
         if t.mark != " " or not t.check:
             continue
         try:
-            rc = subprocess.run(
-                ["bash", "-c", t.check], cwd=ROOT, capture_output=True, timeout=CHECK_TIMEOUT
-            ).returncode
+            commands = parse_check(t.check)
+        except ValueError as exc:
+            errors.append(f"{t.id}: unsafe or unsupported `done when`: {exc}")
+            continue
+        try:
+            rc = 0
+            for command in commands:
+                rc = subprocess.run(
+                    command, cwd=ROOT, capture_output=True, timeout=CHECK_TIMEOUT
+                ).returncode
+                if rc:
+                    break
         except subprocess.TimeoutExpired:
             errors.append(f"{t.id}: `done when` timed out after {CHECK_TIMEOUT}s")
             continue
