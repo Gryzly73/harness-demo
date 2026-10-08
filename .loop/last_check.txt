@@ -1,28 +1,6 @@
 $ 'C:\Users\MaksimMedvedev\Documents\Job\kultura1701\semsearch\.venv\Scripts\python.exe' -m pytest -q tests/acceptance/test_russian.py
-.FF.                                                                     [100%]
-================================== FAILURES ===================================
-_____________________ test_inflected_forms_share_a_token ______________________
+....                                                                     [100%]
+4 passed in 0.03s
 
-    def test_inflected_forms_share_a_token():
->       assert set(tokenize("хлеба")) & set(tokenize("хлеб"))
-E       AssertionError: assert ({'хлеба'} & {'хлеб'})
-E        +  where {'хлеба'} = set(['хлеба'])
-E        +    where ['хлеба'] = tokenize('хлеба')
-E        +  and   {'хлеб'} = set(['хлеб'])
-E        +    where ['хлеб'] = tokenize('хлеб')
-
-tests\acceptance\test_russian.py:14: AssertionError
-______________________________ test_yo_equals_ye ______________________________
-
-    def test_yo_equals_ye():
->       assert tokenize("свёкла") == tokenize("свекла")
-E       AssertionError: assert ['свёкла'] == ['свекла']
-E         
-E         At index 0 diff: 'свёкла' != 'свекла'
-E         Use -v to get more diff
-
-tests\acceptance\test_russian.py:19: AssertionError
-=========================== short test summary info ===========================
-FAILED tests/acceptance/test_russian.py::test_inflected_forms_share_a_token
-FAILED tests/acceptance/test_russian.py::test_yo_equals_ye - AssertionError: ...
-2 failed, 2 passed in 0.09s
+$ 'C:\Users\MaksimMedvedev\Documents\Job\kultura1701\semsearch\.venv\Scripts\python.exe' -m minisearch.evaluate --set ru --min-recall 0.9
+recall@3 [ru] = 1.000 (min 0.900)
