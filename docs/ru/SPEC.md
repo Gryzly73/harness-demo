@@ -26,7 +26,7 @@ python -m minisearch.evaluate
 | `tokenize.py` | `tokenize(text: str) -> list[str]`: нижний регистр и разбиение на словесные токены. |
 | `embed.py` | `HashingEmbedder(dim: int = 1024)` с `.dim` и `.embed(text) -> list[float]`: hashing trick для bag-of-words, единичная длина вектора, нулевой вектор для текста без токенов. |
 | `index.py` | `Index(embedder)` с `.add(doc)`, `.add_many(docs)`, `.search(query, k=5) -> list[tuple[Document, float]]`: cosine similarity, лучшие результаты первыми, одинаковые оценки сортируются по id, возвращаются только оценки выше нуля. |
-| `cli.py` | `python -m minisearch.cli search QUERY [--corpus F] [-k N]`; корпус по умолчанию — `data/corpus.jsonl`. Формат строки: `<doc_id>\t<score:.3f>\t<первые 60 символов текста>`. |
+| `cli.py` | `python -m minisearch.cli search QUERY [--corpus F] [-k N] [--format text\|json\|csv] [--output PATH]`; корпус по умолчанию — `data/corpus.jsonl`. Текстовый формат по умолчанию: `<doc_id>\t<score:.3f>\t<первые 60 символов текста>`. |
 | `evaluate.py` | Предоставлен и защищён. Импортирует `Index`, `HashingEmbedder`, `load_jsonl` и путь к корпусу. Изменять нельзя. |
 
 ## Функции в порядке реализации
@@ -39,6 +39,10 @@ python -m minisearch.evaluate
 3. **Русский язык**: `recall@3` не ниже `0.9` на `eval/ru.jsonl`; английский
    показатель не должен опуститься ниже `0.8`.
 4. **Языковой фильтр**: `Index.search(query, k, lang=None)` и CLI `--lang`.
+5. **Выгрузка результатов**: CLI `--format text|json|csv` и необязательный
+   `--output PATH`. JSON содержит UTF-8 массив, CSV — строку заголовков. Поля:
+   `id`, `score`, `text`, `lang`. Без `--output` результат выводится в stdout.
+   Текстовый формат остаётся значением по умолчанию.
 
 ## Общая приёмка каждой итерации
 

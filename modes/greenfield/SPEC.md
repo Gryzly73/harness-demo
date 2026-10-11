@@ -14,7 +14,7 @@ Quality is **measured**, not asserted: `python -m minisearch.evaluate`.
 | `tokenize.py` | `tokenize(text: str) -> list[str]`: lowercase, split into word tokens. |
 | `embed.py` | `HashingEmbedder(dim: int = 1024)` with `.dim` and `.embed(text) -> list[float]`: bag-of-words hashing trick, **unit length**, all-zero vector for text without tokens. |
 | `index.py` | `Index(embedder)` with `.add(doc)`, `.add_many(docs)`, `.search(query, k=5) -> list[tuple[Document, float]]` by cosine similarity, best first, ties by doc id, only scores > 0. |
-| `cli.py` | `python -m minisearch.cli search QUERY [--corpus F] [-k N]`; default corpus `data/corpus.jsonl`. One line per hit: `<doc_id>\t<score:.3f>\t<first 60 chars of text>`. |
+| `cli.py` | `python -m minisearch.cli search QUERY [--corpus F] [-k N] [--format text\|json\|csv] [--output PATH]`; default corpus `data/corpus.jsonl`. Default `text` output keeps one line per hit: `<doc_id>\t<score:.3f>\t<first 60 chars of text>`. |
 | `evaluate.py` | **Provided, protected.** Imports `Index`, `HashingEmbedder`, `load_jsonl` and the corpus path. Do not edit. |
 
 ## Features, in the order the plan should deliver them
@@ -22,6 +22,10 @@ Quality is **measured**, not asserted: `python -m minisearch.evaluate`.
 2. **Persistence**: `Index.save(path)`, `Index.load(path, embedder)`; CLI `index --corpus F --out P` and `search Q --index P`. An index built in one process must be searchable from another.
 3. **Russian**: recall@3 >= 0.9 on `eval/ru.jsonl`, English must not regress (>= 0.8).
 4. **Language filter**: `Index.search(query, k, lang=None)` and CLI `--lang`.
+5. **Result export**: CLI `--format text|json|csv` and optional `--output PATH`.
+   JSON is a UTF-8 array and CSV has a header; both contain `id`, `score`, `text`,
+   and `lang`. Without `--output`, data goes to stdout. Existing text output is
+   the default and remains backward compatible.
 
 ## Global acceptance (every iteration, `make check`)
 `ruff check .` clean, `pytest -q` green, `python -m minisearch.evaluate --set en --min-recall 0.8`.

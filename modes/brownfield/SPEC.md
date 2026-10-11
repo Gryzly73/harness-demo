@@ -13,10 +13,13 @@ The target is a *measurable* search quality, not "it runs".
 1. Persistence: an index built in one process can be searched from another.
 2. Russian: recall@3 on `eval/ru.jsonl` is at least 0.9, and English does not regress.
 3. Language filter in the API and the CLI.
+4. Result export: CLI `--format text|json|csv` and optional `--output PATH`.
 
 ## Constraints
 - Standard library only at runtime. No new runtime dependencies.
 - Search CLI output format: `<doc_id>\t<score:.3f>\t<first 60 chars>`.
+- JSON is a UTF-8 array and CSV has a header; both contain `id`, `score`, `text`,
+  and `lang`. Without `--output`, data goes to stdout. Text remains the default.
 
 ## Protected (agent must not modify; the harness reverts changes)
 `tests/acceptance/`, `eval/`, `data/`, `SPEC.md`, `harness/`, `loop.sh`, `.cursor/`
