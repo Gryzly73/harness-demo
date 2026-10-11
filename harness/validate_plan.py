@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CHECK_TIMEOUT = 120
 
 
-def shape_errors(tasks: list[Task]) -> list[str]:
+def shape_errors(tasks: list[Task], *, allow_completed: bool = False) -> list[str]:
     errors: list[str] = []
     if not tasks:
         return ["plan has no tasks (expected lines like `- [ ] T1 title`)"]
@@ -36,7 +36,7 @@ def shape_errors(tasks: list[Task]) -> list[str]:
         seen.add(t.id)
         if not t.check:
             errors.append(f"{t.id}: missing line `  - done when: \\`<command>\\``")
-        if t.mark != " ":
+        if t.mark != " " and not (allow_completed and t.mark == "x"):
             errors.append(f"{t.id}: new plans must start unchecked, found [{t.mark}]")
     return errors
 
@@ -50,10 +50,10 @@ def coverage_errors(tasks: list[Task], acceptance: list[str]) -> list[str]:
     ]
 
 
-def red_errors(tasks: list[Task]) -> list[str]:
+def red_errors(tasks: list[Task], *, allow_completed: bool = False) -> list[str]:
     errors: list[str] = []
     for t in tasks:
-        if t.mark != " " or not t.check:
+        if t.mark not in ({" ", "x"} if allow_completed else {" "}) or not t.check:
             continue
         try:
             commands = parse_check(t.check)
@@ -71,8 +71,10 @@ def red_errors(tasks: list[Task]) -> list[str]:
         except subprocess.TimeoutExpired:
             errors.append(f"{t.id}: `done when` timed out after {CHECK_TIMEOUT}s")
             continue
-        if rc == 0:
+        if t.mark == " " and rc == 0:
             errors.append(f"{t.id}: `done when` already passes: vacuous check or task already done")
+        elif t.mark == "x" and rc != 0:
+            errors.append(f"{t.id}: marked complete but `done when` fails")
     return errors
 
 
@@ -118,10 +120,11 @@ def main(argv: list[str]) -> int:
             return 0  # no committed plan to compare with
         errors = diff_errors(parse(show.stdout), new)
     else:
-        errors = shape_errors(new)
+        allow_completed = "--allow-completed" in argv
+        errors = shape_errors(new, allow_completed=allow_completed)
         if not errors:
             errors += coverage_errors(new, _acceptance_files())
-            errors += red_errors(new)
+            errors += red_errors(new, allow_completed=allow_completed)
     for e in errors:
         print(f"- {e}")
     return 1 if errors else 0

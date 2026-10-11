@@ -76,10 +76,14 @@ def plan(command: str, task_id: str | None = None) -> subprocess.CompletedProces
     return run(args)
 
 
-def validate_plan(*, diff_head: bool = False) -> subprocess.CompletedProcess[str]:
+def validate_plan(
+    *, diff_head: bool = False, allow_completed: bool = False
+) -> subprocess.CompletedProcess[str]:
     args = [sys.executable, "-m", "harness.validate_plan"]
     if diff_head:
         args.append("--diff-head")
+    if allow_completed:
+        args.append("--allow-completed")
     return run(args)
 
 
@@ -320,7 +324,7 @@ def main() -> int:
             return 5
         commit("plan: validated and approved")
     else:
-        validation = validate_plan()
+        validation = validate_plan(allow_completed=True)
         if validation.returncode:
             print(f"plan lint failed:\n{validation.stdout}{validation.stderr}")
             return 3

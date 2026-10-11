@@ -2,6 +2,7 @@
 
 A tiny search library (hashing embedder + cosine, English and Russian, stdlib only) used as a target
 for an **agentic harness**: goal -> plan -> loop, with objective checks outside the agent.
+The completed result supports backward-compatible text output plus UTF-8 JSON/CSV export.
 
 Документация:
 - [полный комплект Markdown-документации на русском](docs/ru/README.md);
