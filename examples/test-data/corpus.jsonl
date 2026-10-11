@@ -1,0 +1,16 @@
+{"id":"ru-hr-vacation","text":"Ежегодный отпуск оформляется через заявление в кадровой системе не позднее чем за четырнадцать календарных дней до начала отпуска.","lang":"ru"}
+{"id":"ru-hr-sick-leave","text":"Электронный больничный лист автоматически поступает работодателю, но сотрудник должен уведомить руководителя об отсутствии.","lang":"ru"}
+{"id":"ru-it-password","text":"Пароль корпоративной учётной записи должен содержать не менее двенадцати символов. Передавать пароль коллегам запрещено.","lang":"ru"}
+{"id":"ru-it-vpn","text":"Для удалённого доступа подключите корпоративный VPN, введите логин и подтвердите вход кодом двухфакторной аутентификации.","lang":"ru"}
+{"id":"ru-it-support","text":"Заявка в техническую поддержку создаётся через сервисный портал. Укажите устройство, описание ошибки и приложите снимок экрана.","lang":"ru"}
+{"id":"ru-fin-expenses","text":"Командировочные расходы возмещаются после загрузки авансового отчёта, билетов и кассовых чеков в финансовую систему.","lang":"ru"}
+{"id":"ru-office-access","text":"Гостевой пропуск в офис заказывает принимающий сотрудник минимум за один рабочий день до визита.","lang":"ru"}
+{"id":"ru-security-phishing","text":"Подозрительное письмо нельзя открывать или пересылать. Сообщите о фишинге службе информационной безопасности специальной кнопкой.","lang":"ru"}
+{"id":"en-hr-vacation","text":"Annual leave must be requested in the HR system at least fourteen calendar days before the first vacation day.","lang":"en"}
+{"id":"en-hr-sick-leave","text":"Employees should notify their manager about sick leave. The electronic medical certificate is delivered to the employer automatically.","lang":"en"}
+{"id":"en-it-password","text":"A corporate account password must contain at least twelve characters. Never share a password with colleagues.","lang":"en"}
+{"id":"en-it-vpn","text":"For remote access connect to the corporate VPN, enter your username, and approve the two-factor authentication code.","lang":"en"}
+{"id":"en-it-support","text":"Create a technical support ticket in the service portal. Include the device, error description, and a screenshot.","lang":"en"}
+{"id":"en-fin-expenses","text":"Business travel expenses are reimbursed after submitting an expense report, tickets, and receipts in the finance system.","lang":"en"}
+{"id":"en-office-access","text":"The host employee must order an office visitor pass at least one business day before the visit.","lang":"en"}
+{"id":"en-security-phishing","text":"Do not open or forward a suspicious email. Report phishing to information security using the dedicated button.","lang":"en"}

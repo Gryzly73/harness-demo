@@ -7,7 +7,8 @@ for an **agentic harness**: goal -> plan -> loop, with objective checks outside 
 - [полный комплект Markdown-документации на русском](docs/ru/README.md);
 - [поисковик для заказчика](ДЛЯ_ЗАКАЗЧИКА.md);
 - [Harness для заказчика](HARNESS_ДЛЯ_ЗАКАЗЧИКА.md);
-- [исходный проект и выполненные доработки](ИСХОДНЫЙ_ПРОЕКТ_И_ДОРАБОТКИ.md).
+- [исходный проект и выполненные доработки](ИСХОДНЫЙ_ПРОЕКТ_И_ДОРАБОТКИ.md);
+- [пример тестовых данных](examples/test-data/README.md).
 
 | Mode | Start state | Who writes the plan | Shows |
 |---|---|---|---|
