@@ -4,6 +4,7 @@ A tiny search library (hashing embedder + cosine, English and Russian, stdlib on
 for an **agentic harness**: goal -> plan -> loop, with objective checks outside the agent.
 
 Документация:
+- [полный комплект Markdown-документации на русском](docs/ru/README.md);
 - [поисковик для заказчика](ДЛЯ_ЗАКАЗЧИКА.md);
 - [Harness для заказчика](HARNESS_ДЛЯ_ЗАКАЗЧИКА.md);
 - [исходный проект и выполненные доработки](ИСХОДНЫЙ_ПРОЕКТ_И_ДОРАБОТКИ.md).
