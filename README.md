@@ -9,7 +9,8 @@ The completed result supports backward-compatible text output plus UTF-8 JSON/CS
 - [поисковик для заказчика](ДЛЯ_ЗАКАЗЧИКА.md);
 - [Harness для заказчика](HARNESS_ДЛЯ_ЗАКАЗЧИКА.md);
 - [исходный проект и выполненные доработки](ИСХОДНЫЙ_ПРОЕКТ_И_ДОРАБОТКИ.md);
-- [пример тестовых данных](examples/test-data/README.md).
+- [пример тестовых данных](examples/test-data/README.md);
+- [готовый пример JSON/CSV-выгрузки](examples/test-output/README.md).
 
 | Mode | Start state | Who writes the plan | Shows |
 |---|---|---|---|
