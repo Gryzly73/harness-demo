@@ -13,6 +13,12 @@ def test_valid_plan_has_no_shape_errors():
     assert shape_errors(parse(OLD)) == []
 
 
+def test_completed_tasks_require_incremental_mode():
+    completed = OLD.replace("- [ ] T1", "- [x] T1")
+    assert shape_errors(parse(completed))
+    assert shape_errors(parse(completed), allow_completed=True) == []
+
+
 def test_missing_check_and_duplicate_ids_are_reported():
     bad = "- [ ] T1 a\n- [ ] T1 b\n  - done when: `true`\n"
     errs = shape_errors(parse(bad))
